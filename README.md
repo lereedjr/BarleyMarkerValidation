@@ -112,9 +112,45 @@ This is where the lab not having results for every trial became a problem. The t
 
  ![alt text](https://raw.githubusercontent.com/twdatascience/BarleyMarkerValidation/master/images/Imp_with%20markers.PNG 'Imputed table')
 
- 
+ To validate the imputations, I created graphs of the traits with imputed values (Imputed values in blue):
 
-Then I ran the knn classification.
+ #### Beta Glucan vs Barley Starch:
+
+![alt text](https://raw.githubusercontent.com/twdatascience/BarleyMarkerValidation/master/images/barly_starch_im.PNG 'Barley Starch')
+
+#### OD vs S/T:
+
+![alt text](https://raw.githubusercontent.com/twdatascience/BarleyMarkerValidation/master/images/S_T_im.PNG 'S/T')
+
+#### Soluble Protein vs S/T:
+
+![alt text](https://raw.githubusercontent.com/twdatascience/BarleyMarkerValidation/master/images/soluble_protein_im.PNG 'Soluble Protein')
+
+#### Turbidity vs Soluble Protein
+
+![alt text](https://raw.githubusercontent.com/twdatascience/BarleyMarkerValidation/master/images/turbidity_im.PNG 'Turbidity')
+
+#### TW vs YIELD
+From this chart it is apparent that many of the imputed values were imputed for the same varieties.
+
+![alt text](https://raw.githubusercontent.com/twdatascience/BarleyMarkerValidation/master/images/yield_tw_im.PNG 'TW and Yield')
+
+#### TW vs FGW
+
+![alt text](https://raw.githubusercontent.com/twdatascience/BarleyMarkerValidation/master/images/tw_im.PNG 'TW')
+
+#### Turbidity vs Wort Color
+
+![alt text](https://raw.githubusercontent.com/twdatascience/BarleyMarkerValidation/master/images/wort_color_im.PNG "Wort Color")
+
+#### Yield vs Soluble Protein
+
+![alt text](https://raw.githubusercontent.com/twdatascience/BarleyMarkerValidation/master/images/wort_color_im.PNG 'Wort Color')
+
+After the imputations, I ran knn for the classification of genetic markers that did not have an allele value. There were two main types of problem with the genetic data, either the signal was too strong (Over) or two week (Shortfall). Knn was run for every trait in the machine learning dataset (ML_Imputed). A basic boxplot for HAP_CALL vs Soluble Protein shows how close the knn is :
+
+![alt text](https://raw.githubusercontent.com/twdatascience/BarleyMarkerValidation/master/images/category_knn.PNG 'KNN Visualization')
+
 # Conclusions
 
 # References
