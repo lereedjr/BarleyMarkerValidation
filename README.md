@@ -16,7 +16,8 @@ The bulk of the analysis to determine if a physical trait was associated with a 
 
 # EDA
 Once I started looking at the data it was apparent that the different trials would need to be comparable. To do this I normalized the data within each trial, for each trait. From the database, there was one file for physical traits measured by the lab, and another file for physical traits measured in the field.
-![alt text] (https://github.com/twdatascience/BarleyMarkerValidation/blob/master/images/beta_glucan.png 'beta_glucan')
+![beta_glucan](https://github.com/twdatascience/BarleyMarkerValidation/blob/master/images/beta_glucan.png)
+
 
 
 
