@@ -159,3 +159,6 @@ With regard to KNN machine learning, the knnImputation package was within reason
 
 # References
 Due to the nature of the data I cannot provide all of the data, but I created a small, heavily edited sample of csv files that can hopefully show the basic use of the code.
+
+Link to video:
+[Barley Marker Validation YouTube](https://www.youtube.com/watch?v=XcEJFcAip68&feature=youtu.be)
