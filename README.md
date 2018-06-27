@@ -98,10 +98,16 @@ Once again, I drilled down to looking at each trial and I finally got it down to
 
 ![alt text](https://raw.githubusercontent.com/twdatascience/BarleyMarkerValidation/master/images/trial_marker_sig_count.PNG 'Final significant count')
 
-To run the k-nearest neighbor machine learning I partially transformed the data. For each variety at each trial, I created a column for each trait.  The
+To run the k-nearest neighbor machine learning I partially transformed the data. For each variety at each trial, I created a column for each trait.  The resulting table looked like this (there are some middle columns missing):
+
+![alt text](https://raw.githubusercontent.com/twdatascience/BarleyMarkerValidation/master/images/ML1.PNG 'Transformed start')
+
+![alt text](https://raw.githubusercontent.com/twdatascience/BarleyMarkerValidation/master/images/ML2.PNG 'Transformed end')
+
+This is where the lab not having results for every trial became a problem. The table was sparsely populated enough that knn did not work. I filtered out all the trials that the lab did not run and I got a data frame that was compatible with knn. I also had to select only columns that had measured values when running the knn. That table looked like this:
 
 
-This is where the lab not having results for every trial became a problem. The table was sparsely populated enough that knn did not work. I filtered out all the trials that the lab did not run and I got a data frame that was compatible with knn. I first ran the knn imputations.
+ I first ran the knn imputations.
 
 Then I ran the knn classification.
 # Conclusions
