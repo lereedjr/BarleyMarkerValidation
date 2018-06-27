@@ -1,0 +1,58 @@
+---
+title: "NormalizePlotTraits"
+author: "Tyler Wilson"
+date: "June 2, 2018"
+output: word_document
+---
+
+```{r}
+library(agricolae)
+library(tidyverse)
+library(ggplot2)
+setwd("C:/users/Meso/Documents/Regis/MSDS 692/R code")
+```
+
+```{r}
+PlotTraits <- read.csv('C:\\Users\\Meso\\Documents\\Regis\\MSDS 692\\CSI2015_PLOT_TRAITS_LOC_NEW.csv', header = TRUE)
+normalize <- function(x){
+  num <- x - min(x)
+  denom <- max(x) -  min(x)
+  return(num/denom)
+}
+```
+
+```{r}
+PlotTraits_noDup <- unique(PlotTraits)
+```
+
+
+```{r}
+exclude_line <- data.frame(Lines = c('CONRAD', 'MERIT 57'))
+exclude_trait <- data.frame(Trait = c("LODGING"))
+Plot_Use <- PlotTraits_noDup %>% filter(! dbo_LINE_LINE_NM %in% exclude_line$Lines, ! TRAIT_NM %in% exclude_trait$Trait)
+```
+
+```{r}
+locations <- unique(Plot_Use$COOP_LOC_NM)
+```
+
+```{r}
+trait_norm <- function(loc_names) {
+  out_list <- list()
+  for (i in seq_along(loc_names)) {
+    loc_filter <- filter(Plot_Use, COOP_LOC_NM == loc_names[i])
+    loc_traits <- unique(loc_filter$TRAIT_NM)
+    out <- list()
+    for (s in seq_along(loc_traits)) {
+      trait <- filter(loc_filter, TRAIT_NM == loc_traits[s])
+      one_trait_norm <- as.data.frame(lapply(trait[8], normalize))
+      trait$norm_obs <- unlist(one_trait_norm)
+      out[[s]] <- trait
+    }
+    out_list[[i]] <- as.data.frame(bind_rows(out))
+  }
+  return(bind_rows(out_list))
+}
+norm_trait_plot <- trait_norm(locations)
+```
+

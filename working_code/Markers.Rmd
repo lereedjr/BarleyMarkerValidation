@@ -1,0 +1,62 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+library(tidyverse)
+library(ggplot2)
+setwd("C:/users/Meso/Documents/Regis/MSDS 692/R code")
+```
+```{r}
+Markers<- read.csv('C:\\Users\\Meso\\Documents\\Regis\\MSDS 692\\CSI2015_MARKERS.csv', header = TRUE)
+Line_Traits <- read.csv('C:\\Users\\Meso\\Documents\\Regis\\MSDS 692\\R code\\LINE_TRAITS_NORMALIZED.csv', header = TRUE)
+Plot_Traits <- read.csv('C:\\Users\\Meso\\Documents\\Regis\\MSDS 692\\R code\\PLOT_TRAITS_NORMALIZED.csv', header = TRUE)
+```
+
+```{r}
+Line_Traits$X <- NULL
+Plot_Traits$X <- NULL
+line_factors <- sapply(Line_Traits, is.factor)
+plot_factors <- sapply(Plot_Traits, is.factor)
+Line_Traits[line_factors] <- lapply(Line_Traits[line_factors], as.character)
+Plot_Traits[plot_factors] <- lapply(Plot_Traits[plot_factors], as.character)
+```
+
+
+
+```{r}
+Traits <- bind_rows(Line_Traits, Plot_Traits)
+```
+```{r}
+Marks_noplant <- Markers[, !(names(Markers) %in% c("PLANT_ID")) ]
+Markers <- unique(Marks_noplant)
+```
+
+```{r}
+exclude_line <- data.frame(Lines = c('CONRAD', 'MERIT 57'))
+Marker_Use <- Markers %>% filter(! dbo_LINE_LINE_NM %in% exclude_line$Lines)
+```
+
+```{r}
+merged_1 <- merge(Marker_Use, Traits, by = c("dbo_LINE_LINE_ID", "dbo_LINE_LINE_NM", "dbo_LINE_1_LINE_ID", "dbo_LINE_1_LINE_NM"))
+exclude_trait_nm <- data.frame(Trait_NM = c('UNIT#', 'FILTRATE ONE HOUR', 'MALT PROBLEMS', 'STEEP IN DATE', 'STEEP NUMBER', 'FGGRAMS OVER'))
+merged <- merged_1 %>% filter(! TRAIT_NM %in% exclude_trait_nm$Trait_NM)
+```
+
+```{r}
+linetest <- filter(merged, dbo_LINE_1_LINE_ID == "258005")
+linetest1 <- filter(merged, MARKER_NM == "12_30793")
+```
+
+
+```{r}
+linetest2 <- filter(merged, MARKER_NM == "12_30793", TRAIT_NM == "YIELD")
+linetest2_year2017 <- filter(linetest2, grepl("2017", COOP_LOC_NM))
+markers_used <- as.data.frame(unique(merged[,5]))
+```
+
+```{r}
+write.csv(merged, "TRAITS_W_MARKERS.csv")
+```
+

@@ -1,0 +1,37 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+```{r}
+library(tidyverse)
+library(ggplot2)
+library(data.table)
+library(DMwR)
+
+setwd("C:/users/Meso/Documents/Regis/MSDS 692/R code")
+ML <- read.csv('ML_TRAITS.csv', header = TRUE, stringsAsFactors = FALSE, na.strings = c(NA, 'NA', ' NA', 'NaN', NaN))
+ML2 <- filter(ML, !is.na(ML$AA.CHART))
+ML2$GM.MOIS <- NULL
+ML2$HEIGHT.CM <- NULL
+ML2$FGGRAMS.OVER <- NULL
+ML2$MALT.MIDS <- NULL
+ML2$MALT.PLUMPS <- NULL
+ML2$MIDS.BARLEY <- NULL
+ML2$PLUMP.BARLEY <- NULL
+ML2$RDF <- NULL
+ML2$SOM.MOIS <- NULL
+ML2$VISC.CP <- NULL
+ML2$WEIGHT <- NULL
+ML2$Z_YIELD <- NULL
+ML2$THINS.BARLEY <- NULL
+test <- knnImputation(ML2[, 10:ncol(ML2)], k = 10)
+```
+
+```{r}
+test$dbo_LINE_LINE_ID <- ML2$dbo_LINE_LINE_ID
+test$COOP_LOC_NM <- ML2$COOP_LOC_NM
+test$CNTRY_NM <- ML2$CNTRY_NM
+test$REGN_NM <- ML2$REGN_NM
+test$LOC_NM <- ML2$LOC_NM
+```
+

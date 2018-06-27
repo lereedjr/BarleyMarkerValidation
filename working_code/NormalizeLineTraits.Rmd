@@ -1,0 +1,88 @@
+---
+title: "LineTraitsNormalized"
+author: "Tyler Wilson"
+date: "May 31, 2018"
+output: word_document
+---
+
+```{r}
+library(agricolae)
+library(tidyverse)
+library(ggplot2)
+setwd("C:/users/Meso/Documents/Regis/MSDS 692/R code")
+```
+
+```{r}
+LineTraits <- read.csv('C:\\Users\\Meso\\Documents\\Regis\\MSDS 692\\CSI2015_TRAITS_WITH_LOC.csv', header = TRUE, stringsAsFactors = FALSE, na.strings = c(NA, "NA", " NA"))
+normalize <- function(x){
+  num <- x - min(x)
+  denom <- max(x) -  min(x)
+  return(num/denom)
+}
+```
+
+```{r}
+exclude_line <- data.frame(Lines = c('CONRAD', 'MERIT 57'))
+exclude_trait_nm <- data.frame(Trait_NM = c('UNIT#', 'FILTRATE ONE HOUR', 'MALT PROBLEMS', 'STEEP IN DATE', 'STEEP NUMBER'))
+Line_Use <- LineTraits %>% filter(! dbo_LINE_LINE_NM %in% exclude_line$Lines, ! TRAIT_NM %in% exclude_trait_nm$Trait_NM)
+```
+
+```{r}
+locations <- unique(Line_Use$COOP_LOC_NM)
+trait_norm <- function(loc_names) {
+  out_list <- list()
+  for (i in seq_along(loc_names)) {
+    loc_filter <- filter(Line_Use, COOP_LOC_NM == loc_names[i])
+    loc_traits <- unique(loc_filter$TRAIT_ID)
+    out <- list()
+    for (s in seq_along(loc_traits)) {
+      trait <- filter(loc_filter, TRAIT_ID == loc_traits[s])
+      trait <- na.omit(trait)
+      if(is.na(trait[1,8])) next
+      one_trait_norm <- as.data.frame(lapply(trait[8], normalize))
+      trait$norm_obs <- unlist(one_trait_norm)
+      out[[s]] <- trait
+    }
+    out_list[[i]] <- as.data.frame(bind_rows(out))
+  }
+  return(bind_rows(out_list))
+}
+norm_trait <- trait_norm(locations)
+```
+
+```{r}
+locations <- data.frame(COOP_LOC_NM = unique(Line_Use$COOP_LOC_NM))
+LineNormal <- data.frame(dbo_LINE_LINE_ID = character(), dbo_LINE_1_LINE_ID = character(), TRAIT_NM = character(), OBSRV_NT_NBR = numeric(), OBSRV_EFF_TSP = character(), COOP_LOC_NM = character(), norm_obs = numeric(), stringsAsFactors = FALSE)
+out_list <- list()
+for (i in 1:nrow(locations)) {
+  loc_filter <- filter(Line_Use, COOP_LOC_NM == locations[i,])
+  loc_traits <- data.frame(TRAIT_ID = unique(loc_filter$TRAIT_ID))
+  out <- list()
+  for (s in 1:nrow(loc_traits)) {
+    trait <- filter(loc_filter, TRAIT_ID == loc_traits[s,])
+    trait <- na.omit(trait)
+    if(is.na(trait[1,8])) next
+    one_trait_norm <- as.data.frame(lapply(trait[8], normalize))
+    trait$norm_obs <- unlist(one_trait_norm)
+    trait$norm_obs <- as.numeric(trait$norm_obs)
+    trait_factors <- sapply(trait, is.factor)
+    trait[trait_factors] <- lapply(trait[trait_factors], as.character)
+    for (t in 1:nrow(trait)) {
+      new_entry <- trait[t,]
+      LineNormal[nrow(LineNormal)+1,] = list(new_entry$dbo_LINE_LINE_ID, new_entry$dbo_LINE_1_LINE_ID, new_entry$TRAIT_NM, new_entry$OBSRV_NT_NBR, new_entry$OBSRV_EFF_TSP, new_entry$COOP_LOC_NM, new_entry$norm_obs)
+    }
+  }
+}
+```
+
+
+
+
+```{r}
+ggplot(data = filter(norm_trait, TRAIT_NM == "YIELD")) + geom_boxplot(mapping = aes(REGN_NM, norm_obs, color = LOC_NM))
+```
+
+```{r}
+ggplot(data = filter(norm_trait, TRAIT_NM == "BETA GLUCAN")) + geom_boxplot(mapping = aes(REGN_NM, norm_obs, color = LOC_NM))
+```
+
