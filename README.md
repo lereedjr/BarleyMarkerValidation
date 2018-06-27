@@ -158,4 +158,4 @@ The main focus of this project was to determine if the markers associated with t
 With regard to KNN machine learning, the knnImputation package was within reason. All the groups of values imputed were clustered within a reasonable range of other values when the corresponding trait was chosen at random. In addition, using KNN to classify missing allele information proved somewhat reliable. The values were not as tightly clustered as some of the imputed values, but they were all in a range that was reasonable to predict what the allele values should be. Machine learning in this application is still going through growing pains, and the more information that it can be fed and learn from, the better it will be in the long term.
 
 # References
- link to video
+Due to the nature of the data I cannot provide all of the data, but I created a small, heavily edited sample of csv files that can hopefully show the basic use of the code.
