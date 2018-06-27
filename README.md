@@ -106,8 +106,11 @@ To run the k-nearest neighbor machine learning I partially transformed the data.
 
 This is where the lab not having results for every trial became a problem. The table was sparsely populated enough that knn did not work. I filtered out all the trials that the lab did not run and I got a data frame that was compatible with knn. I also had to select only columns that had measured values when running the knn. That table looked like this:
 
+![alt text](https://raw.githubusercontent.com/twdatascience/BarleyMarkerValidation/master/images/ML_im.PNG 'Ready for knn imputation')
 
- I first ran the knn imputations.
+ Before running the knn imputations I created a new table that marked where the missing values were. Then I ran the knnImputation function in the DMwR package. The resulting table looked like this:
+
+ ![alt text]()
 
 Then I ran the knn classification.
 # Conclusions
