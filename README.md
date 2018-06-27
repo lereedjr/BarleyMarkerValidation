@@ -104,11 +104,11 @@ To run the k-nearest neighbor machine learning I partially transformed the data.
 
 ![alt text](https://raw.githubusercontent.com/twdatascience/BarleyMarkerValidation/master/images/ML2.PNG 'Transformed end')
 
-This is where the lab not having results for every trial became a problem. The table was sparsely populated enough that knn did not work. I filtered out all the trials that the lab did not run and I got a data frame that was compatible with knn. I also had to select only columns that had measured values when running the knn. That table looked like this:
+This is where the lab not having results for every trial became a problem. The table was sparsely populated enough that KNN did not work. I filtered out all the trials that the lab did not run and I got a data frame that was compatible with KNN. I also had to select only columns that had measured values when running the KNN. That table looked like this:
 
-![alt text](https://raw.githubusercontent.com/twdatascience/BarleyMarkerValidation/master/images/ML_im.PNG 'Ready for knn imputation')
+![alt text](https://raw.githubusercontent.com/twdatascience/BarleyMarkerValidation/master/images/ML_im.PNG 'Ready for KNN imputation')
 
- Before running the knn imputations I created a new table that marked where the missing values were. Then I ran the knnImputation function in the DMwR package. The resulting table looked like this:
+ Before running the KNN imputations I created a new table that marked where the missing values were. Then I ran the knnImputation function in the DMwR package. The resulting table looked like this:
 
  ![alt text](https://raw.githubusercontent.com/twdatascience/BarleyMarkerValidation/master/images/Imp_with%20markers.PNG 'Imputed table')
 
@@ -147,11 +147,15 @@ From this chart it is apparent that many of the imputed values were imputed for 
 
 ![alt text](https://raw.githubusercontent.com/twdatascience/BarleyMarkerValidation/master/images/wort_color_im.PNG 'Wort Color')
 
-After the imputations, I ran knn for the classification of genetic markers that did not have an allele value. There were two main types of problem with the genetic data, either the signal was too strong (Over) or two week (Shortfall). Knn was run for every trait in the machine learning dataset (ML_Imputed). A basic boxplot for HAP_CALL vs Soluble Protein shows how close the knn is :
+After the imputations, I ran KNN for the classification of genetic markers that did not have an allele value. There were two main types of problem with the genetic data, either the signal was too strong (Over) or two week (Shortfall). KNN was run for every trait in the machine learning dataset (ML_Imputed). A basic boxplot for HAP_CALL vs Soluble Protein shows how close the KNN is :
 
-![alt text](https://raw.githubusercontent.com/twdatascience/BarleyMarkerValidation/master/images/category_knn.PNG 'KNN Visualization')
+![alt text](https://raw.githubusercontent.com/twdatascience/BarleyMarkerValidation/master/images/category_KNN.PNG 'KNN Visualization')
 
 # Conclusions
+
+The main focus of this project was to determine if the markers associated with traits by academia also correlate with traits within our private varieties. The results are decidedly mixed. Of the top 20 markers identified with traits in this study, 11 correlate with the academic materials. While the percentage of this is not very high, the fact that many characteristics originally presented as significant, and even after narrowing the scope, over half correlated shows there is potential for this technology. The more data, and the more complete data that is generated, the more accurate these associations will become.
+
+With regard to KNN machine learning, the knnImputation package was within reason. All the groups of values imputed were clustered within a reasonable range of other values when the corresponding trait was chosen at random. In addition, using KNN to classify missing allele information proved somewhat reliable. The values were not as tightly clustered as some of the imputed values, but they were all in a range that was reasonable to predict what the allele values should be. Machine learning in this application is still going through growing pains, and the more information that it can be fed and learn from, the better it will be in the long term.
 
 # References
  link to video
