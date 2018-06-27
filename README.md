@@ -149,7 +149,7 @@ From this chart it is apparent that many of the imputed values were imputed for 
 
 After the imputations, I ran KNN for the classification of genetic markers that did not have an allele value. There were two main types of problem with the genetic data, either the signal was too strong (Over) or two week (Shortfall). KNN was run for every trait in the machine learning dataset (ML_Imputed). A basic boxplot for HAP_CALL vs Soluble Protein shows how close the KNN is :
 
-![alt text](https://raw.githubusercontent.com/twdatascience/BarleyMarkerValidation/master/images/category_KNN.PNG 'KNN Visualization')
+![alt text](https://raw.githubusercontent.com/twdatascience/BarleyMarkerValidation/master/images/category_knn.PNG 'KNN Visualization')
 
 # Conclusions
 
