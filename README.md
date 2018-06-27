@@ -110,7 +110,9 @@ This is where the lab not having results for every trial became a problem. The t
 
  Before running the knn imputations I created a new table that marked where the missing values were. Then I ran the knnImputation function in the DMwR package. The resulting table looked like this:
 
- ![alt text]()
+ ![alt text](https://raw.githubusercontent.com/twdatascience/BarleyMarkerValidation/master/images/Imp_with%20markers.PNG 'Imputed table')
+
+ 
 
 Then I ran the knn classification.
 # Conclusions
